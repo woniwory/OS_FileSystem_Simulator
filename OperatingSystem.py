@@ -96,12 +96,6 @@ class OperatingSystem:
                         self.filesystem.move_subdirectory(
                             self.filesystem.getCurrent_directory().subdirectories[dir_name])
 
-            elif command.startswith('vi '):
-                parts = command.split(' ', 1)
-                if len(parts) == 1:  # No argument provided
-                    print("Invalid command")
-                else:
-
 
             elif command == 'exit':
                 break
