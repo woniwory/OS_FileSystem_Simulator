@@ -9,7 +9,7 @@ class Directory:
         self.modified = datetime.now()
         self.last_accessed = datetime.now()
         self.subdirectories = {}
-        self.files = []
+        self.files = {}
         self.parent = parent
         print(f'{self.name} created at {self.created}')
 
