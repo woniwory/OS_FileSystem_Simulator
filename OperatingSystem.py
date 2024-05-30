@@ -1,4 +1,5 @@
 import os
+import shutil
 from datetime import datetime
 from Directory import Directory
 from File import File
@@ -62,9 +63,9 @@ class Filesystem:
             parent_directory = self.current_directory.parent
             self.current_directory = parent_directory
             os.chdir('..')
-            print(f"Moved to {os.getcwd()} (parent directory)")
+            print(f"이전 디렉토리로 이동: {os.getcwd()}")  # 이전 디렉토리로 이동 메시지 수정
         else:
-            print("No parent directory")
+            print("상위 디렉토리가 없습니다.")
 
     def getCurrent_directory(self):
         return self.current_directory
@@ -112,21 +113,21 @@ class OperatingSystem:
                 self.filesystem.print_file()
             elif command.startswith('cd '):
                 parts = command.split(' ', 1)
-                if len(parts) == 1:  # No argument provided
+                if len(parts) == 1:  # 인수가 제공되지 않은 경우
                     self.filesystem.print_file()
                 else:
                     dir_name = parts[1]
-                    print(self.filesystem.getCurrent_directory)
-                    print(os.getcwd())
-                    print(self.filesystem.getCurrent_directory().subdirectories)
-                    if dir_name not in self.filesystem.getCurrent_directory().subdirectories:
-                        if self.filesystem.getCurrent_directory().parent and self.filesystem.getCurrent_directory().parent.name == dir_name:
-                            self.filesystem.move_parent_directory()
-                        else:
-                            print(f"Directory {dir_name} not found")
+                    if dir_name == '../':
+                        self.filesystem.move_parent_directory()  # 부모 디렉토리로 이동
                     else:
-                        self.filesystem.move_subdirectory(
-                            self.filesystem.getCurrent_directory().subdirectories[dir_name])
+                        # 만약 디렉토리 이름이 존재하지 않는다면
+                        if dir_name not in self.filesystem.getCurrent_directory().subdirectories:
+                            print(f"디렉토리 {dir_name}을(를) 찾을 수 없습니다.")
+                        else:
+                            # 사용자가 입력한 디렉토리 이름을 갖는 하위 디렉토리로 이동
+                            self.filesystem.move_subdirectory(
+                                self.filesystem.getCurrent_directory().subdirectories[dir_name])
+
             elif command.startswith('create '):
                 parts = command.split(' ', 2)
                 if len(parts) < 2:
