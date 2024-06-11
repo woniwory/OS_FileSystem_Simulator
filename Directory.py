@@ -11,7 +11,7 @@ class Directory:
         self.subdirectories = {}
         self.files = {}
         self.parent = parent
-        print(f'{self.name} created at {self.created}')
+        print(f'\033[34m/{self.name} created at {self.created}\033[0m')
 
 
     def get_directory(self):
